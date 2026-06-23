@@ -1,0 +1,9 @@
+.firebase/
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.backup
+*.broken
+ui-ux-pro-max-skill/
+PyCharmMiscProject/
