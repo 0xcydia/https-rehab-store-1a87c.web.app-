@@ -3,8 +3,9 @@
 ## Stack
 - **Hosting**: Firebase Hosting (free tier, 10GB/mo)
 - **Database**: Firestore (free tier, 1GB/mo)
+- **Storage**: Firebase Storage (free tier, 5GB/mo) — product images
 - **Auth**: Firebase Auth (free tier) — email/password for admin only
-- **Frontend**: Single `index.html` (inline CSS/JS, ~2388 lines)
+- **Frontend**: Single `index.html` (inline CSS/JS, ~2400 lines)
 
 No Cloud Functions needed — Firestore security rules handle all access control.
 
@@ -31,12 +32,9 @@ No Cloud Functions needed — Firestore security rules handle all access control
 - `desc` / `descAr` — English and Arabic descriptions
 - `currency` — default currency for the product
 
-## Security Rules (`firestore.rules`)
-- **Products**: public read, admin-only write
-- **Orders**: public create (place order), admin read/update
-- **Subscribers**: public create (subscribe), admin read
-
-Admin write requires `request.auth.token.admin == true` custom claim.
+## Security Rules
+- **Firestore** (`firestore.rules`): Products public read, admin write (requires auth); orders public create, admin read; subscribers public create, admin read
+- **Storage** (`storage.rules`): Public read, admin-only write (requires auth)
 
 ## Admin Panel
 - **Access**: Click "Admin" nav link → login modal
@@ -54,7 +52,7 @@ Admin write requires `request.auth.token.admin == true` custom claim.
 - **Wishlist**: localStorage-backed (`rehab_wish`)
 - **Product Modal**: Quick-view with color selection and quantity
 - **Newsletter**: Email subscription form
-- **Admin CRUD**: Add/edit/delete products, view/delete orders & subscribers
+- **Admin CRUD**: Add/edit/delete products (with image upload to Firebase Storage), view/delete orders & subscribers
 - **Floating Hearts**: Decorative animation
 
 ## Error Handling

@@ -1,9 +1,12 @@
 {
   "hosting": {
     "public": ".",
-    "ignore": ["firebase.json", "firestore.rules", "plan.md", "node_modules"]
+    "ignore": ["firebase.json", "firestore.rules", "storage.rules", "plan.md", "node_modules"]
   },
   "firestore": {
     "rules": "firestore.rules"
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

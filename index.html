@@ -48,6 +48,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
 <style>
 :root {
   --hpink: #FF1493; --mpink: #FF69B4; --lpink: #FFB6C1; --mp: #FFF0F5;
@@ -404,7 +405,6 @@ img{max-width:100%;display:block}
 .whatsapp-btn:hover{transform:scale(1.15);box-shadow:0 4px 12px rgba(37,211,102,0.6)}
 
 /* Arabic Support */
-body.rtl{font-family:'Cairo',sans-serif;direction:rtl}
 .arabic{font-family:'Cairo',sans-serif}
 .product-name.arabic{font-size:0.85rem;color:#888;margin-top:4px}
 .product-modal-desc.arabic{font-size:0.85rem;color:#888;line-height:1.6;margin-top:8px}
@@ -727,7 +727,8 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
           </div>
           <div class="form-group"><label>Original Price (optional)</label><input type="number" id="pfOrig" step="0.01"></div>
           <div class="form-group"><label>Badge (Sale / New / empty)</label><input type="text" id="pfBadge" placeholder="e.g. Sale"></div>
-          <div class="form-group"><label>Image URL</label><input type="url" id="pfImg" required></div>
+          <div class="form-group"><label>Image URL (or upload below)</label><input type="url" id="pfImg"></div>
+          <div class="form-group"><label>Or Upload Image</label><input type="file" id="pfImgFile" accept="image/*"></div>
           <div class="form-group"><label>Colors (comma-separated hex)</label><input type="text" id="pfColors" placeholder="#FF1493,#FF69B4"></div>
           <div class="form-group"><label>Description</label><textarea id="pfDesc" rows="2"></textarea></div>
           <div class="form-group"><label>Description (Arabic)</label><textarea id="pfDescAr" rows="2" placeholder="الوصف بالعربية"></textarea></div>
@@ -916,6 +917,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 const db = firebase.firestore()
 const auth = firebase.auth()
+const storage = firebase.storage()
 
 // ============ REHAB STORE CONFIG ============
 const WHATSAPP_NUMBER = '+201555121123' // Your WhatsApp number
@@ -953,6 +955,15 @@ function escapeHtml(str) {
   return d.innerHTML
 }
 
+async function uploadProductImage(file) {
+  if (!file) return null
+  const ext = file.name.split('.').pop()
+  const path = `products/${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`
+  const ref = storage.ref(path)
+  await ref.put(file)
+  return ref.getDownloadURL()
+}
+
 
 
 // ============ CURRENCY FUNCTIONS ============
@@ -963,7 +974,7 @@ function formatPrice(price, currency) {
   const symbol = CURRENCY_SYMBOLS[currency] || currency
   // Round to appropriate decimal places
   // EGP typically uses 0 decimals, USD and AED use 2
-  const decimals = currency === 'EGP' ? 0 : 2
+  const decimals = 2
   const formattedPrice = parseFloat(price).toFixed(decimals)
   return symbol + ' ' + formattedPrice
 }
@@ -1102,28 +1113,27 @@ const TEST_PRODUCTS = [
 ]
 
 async function loadProducts() {
+  let products = []
   try {
     const snap = await firestoreWithTimeout(db.collection('products').orderBy('createdAt', 'desc').get())
-    if (!snap.empty) {
-      const products = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-      productsMap = {}
-      products.forEach(p => { productsMap[p.id] = p })
-      renderProducts(products)
-      return products
-    }
+    products = snap.docs.map(d => ({ id: d.id, ...d.data() }))
   } catch { /* Firestore unavailable */ }
-  // Fallback: check localStorage for user-created products, then test products
   let localProducts = []
   try { localProducts = JSON.parse(localStorage.getItem('rehab_products') || '[]') } catch { /* ignore */ }
-  const fallback = localProducts.length ? localProducts : TEST_PRODUCTS
-  productsMap = {}
-  fallback.forEach(p => { productsMap[p.id] = p })
-  renderProducts(fallback)
-  if (!localProducts.length) {
-    console.log('📦 Using test products (Firestore not available)')
-    showToast('Store is in demo mode with sample products 🩷', 'info')
+  const allProducts = localProducts.length ? [...localProducts, ...products] : products
+  if (allProducts.length) {
+    productsMap = {}
+    allProducts.forEach(p => { productsMap[p.id] = p })
+    renderProducts(allProducts)
+    return allProducts
   }
-  return fallback
+  // No products anywhere — show test products as demo
+  productsMap = {}
+  TEST_PRODUCTS.forEach(p => { productsMap[p.id] = p })
+  renderProducts(TEST_PRODUCTS)
+  console.log('📦 Using test products (no data found)')
+  showToast('Store is in demo mode with sample products 🩷', 'info')
+  return TEST_PRODUCTS
 }
 
 // --- Product detail modal ---
@@ -1950,7 +1960,14 @@ async function loadAdminSubscribers() {
 }
 
 function editProduct(id) {
-  const p = productsMap[id]
+  let p = productsMap[id]
+  // If not in productsMap (e.g. local-only product), try localStorage
+  if (!p) {
+    try {
+      const local = JSON.parse(localStorage.getItem('rehab_products') || '[]')
+      p = local.find(x => x.id === id)
+    } catch { /* ignore */ }
+  }
   if (!p) return
   editingProductId = id
   document.getElementById('pfId').value = id
@@ -1984,7 +2001,7 @@ async function deleteProduct(id) {
     return
   }
   try {
-    await db.collection('products').doc(id).delete()
+    await firestoreWithTimeout(db.collection('products').doc(id).delete())
     showToast('Product deleted!', 'ok')
     loadAdminProducts()
     loadProducts()
@@ -2002,7 +2019,7 @@ async function deleteOrder(id) {
     return
   }
   try {
-    await db.collection('orders').doc(id).delete()
+    await firestoreWithTimeout(db.collection('orders').doc(id).delete())
     showToast('Order deleted!', 'ok')
     loadAdminOrders()
   } catch { showToast('Error deleting order', 'err') }
@@ -2011,7 +2028,7 @@ async function deleteOrder(id) {
 async function deleteSubscriber(id) {
   if (!confirm('Delete this subscriber?')) return
   try {
-    await db.collection('subscribers').doc(id).delete()
+    await firestoreWithTimeout(db.collection('subscribers').doc(id).delete())
     showToast('Subscriber deleted!', 'ok')
     loadAdminSubscribers()
   } catch { showToast('Error deleting subscriber', 'err') }
@@ -2262,7 +2279,18 @@ document.addEventListener('DOMContentLoaded', () => {
       currency: currency,
       createdAt: Date.now()
     }
-    if (!body.name || !body.cat || !body.price || !body.img) { showToast('Please fill required fields', 'err'); return }
+    const fileInput = document.getElementById('pfImgFile')
+    const hasFile = fileInput && fileInput.files && fileInput.files[0]
+    if (!body.name || !body.cat || !body.price || (!body.img && !hasFile)) { showToast('Please fill required fields (name, category, price, and image)', 'err'); return }
+    if (hasFile) {
+      try {
+        body.img = await uploadProductImage(fileInput.files[0])
+        fileInput.value = ''
+      } catch {
+        showToast('Image upload failed. Try a URL instead.', 'err')
+        return
+      }
+    }
     let saved = false
     try {
       const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 4000))
