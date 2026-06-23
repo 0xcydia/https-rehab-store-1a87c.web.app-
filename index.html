@@ -31,7 +31,7 @@
   "description": "Discover the finest collection of fashion, accessories, and lifestyle pieces at Rehab Store. Free shipping across Egypt and UAE.",
   "image": "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "address": {"@type": "PostalAddress","addressCountry": "EG"},
-  "sameAs": ["https://wa.me/201555121123"],
+  "sameAs": ["https://wa.me/201555121132"],
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "EGP",
@@ -394,7 +394,7 @@ img{max-width:100%;display:block}
 .currency-selector{display:flex;align-items:center;gap:4px;padding:6px 12px;border:2px solid var(--mp);border-radius:999px;background:white;font-size:0.85rem;font-weight:600;color:var(--hpink);cursor:pointer}
 .currency-selector:hover{border-color:var(--hpink);box-shadow:0 2px 8px rgba(255,20,147,0.2)}
 .currency-selector select{padding:4px 8px;border:none;background:none;font-family:'Quicksand',sans-serif;font-size:0.85rem;font-weight:600;color:var(--hpink);cursor:pointer;outline:none}
-.currency-selector select option{color:var(--text)}
+.currency-selector select option{color:#2D2D2D}
 
 /* WhatsApp Button */
 .btn-whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);color:white;box-shadow:0 4px 16px rgba(37,211,102,0.3)}
@@ -478,6 +478,7 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
         <li><a href="#features">Why Us</a></li>
         <li><a href="#reviews">Reviews</a></li>
         <li><a href="#social">Follow</a></li>
+        <li><a href="#footer">US</a></li>
         <li><a href="#" id="adminNavBtn" style="color:var(--hpink);font-size:0.8rem">Admin</a></li>
       </ul>
       <div class="nav-actions">
@@ -611,7 +612,7 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
   </section>
 </main>
 
-<footer class="footer">
+<footer class="footer" id="footer">
   <div class="container">
     <div class="footer-grid">
       <div>
@@ -619,14 +620,13 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
         <p class="fd">Making everyday moments feel special with our curated collection of beautiful things, just for you.</p>
         <p class="arabic" style="font-size:0.85rem;margin-top:8px;color:rgba(255,255,255,0.5)">جعل كل لحظة خاصة مع مجموعة مختارة من الأشياء الجميلة، فقط من أجلك</p>
         <div class="social-links">
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://wa.me/201555121123" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.instagram.com/_hoba.collection/profilecard/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@rehab.kamal39?_t=ZM-8srxv8OJ0tB&amp;_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.facebook.com/rehab.kamal.3762" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://wa.me/201555121132" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
         <div style="margin-top:16px;">
-          <a href="https://wa.me/201555121123" class="btn btn-whatsapp" style="padding:10px 20px;font-size:0.85rem">
+          <a href="https://wa.me/201555121132" class="btn btn-whatsapp" style="padding:10px 20px;font-size:0.85rem">
             <i class="fab fa-whatsapp"></i> Order via WhatsApp
           </a>
         </div>
@@ -918,7 +918,7 @@ const db = firebase.firestore()
 const auth = firebase.auth()
 
 // ============ REHAB STORE CONFIG ============
-const WHATSAPP_NUMBER = '+201555121123' // Your WhatsApp number
+const WHATSAPP_NUMBER = '+201555121132'
 const STORE_NAME = 'Rehab Store'
 const STORE_NAME_AR = 'متجر ريحاب'
 
@@ -1087,18 +1087,18 @@ function renderProductCard(p) {
   const price = getProductPrice(p, selectedCurrency)
   const origPrice = getProductOrigPrice(p, selectedCurrency)
   const safeId = p.id.replace(/]/g, '\\]').replace(/[']/g, "\\'")
-  const safeName = (p.name || p.nameAr || '').replace(/'/g, "\\'")
-  const safeCat = p.cat ? p.cat.replace(/'/g, "\\'") : ''
-  return `<div class="product-card" data-id="${p.id}" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name || p.nameAr)}">
-    <div class="product-card-img">
-      ${p.badge ? `<span class="prod-badge${p.badge === 'Sale' ? ' sale' : ''}">${p.badge}</span>` : ''}
-      <button class="wish-heart${wished ? ' liked' : ''}" aria-label="${wishLabel}" onclick="event.stopPropagation();toggleWish('${safeId}')">${wished ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>'}</button>
-      <button class="whatsapp-btn" onclick="event.stopPropagation();openWhatsAppWithProduct(productsMap['${safeId}'])" aria-label="Order via WhatsApp"><i class="fab fa-whatsapp"></i></button>
-      <img src="${p.img || 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&auto=format&fit=crop'}" alt="${escapeHtml(p.name || p.nameAr)}" loading="lazy">
-    </div>
-    <div class="product-body">
-      <p class="product-cat">${escapeHtml(p.cat)} ${p.cat && p.catAr ? `<span class="arabic">- ${escapeHtml(p.catAr)}</span>` : ''}</p>
-      <h3 class="product-name arabic">${escapeHtml(p.name || p.nameAr)}</h3>
+const nameDisplay = p.nameEn || p.name || p.nameAr
+      const nameDisplayAr = p.nameAr
+      return `<div class="product-card" data-id="${p.id}" tabindex="0" role="button" aria-label="View ${escapeHtml(nameDisplay)}">
+        <div class="product-card-img">
+          ${p.badge ? `<span class="prod-badge${p.badge === 'Sale' ? ' sale' : ''}">${p.badge}</span>` : ''}
+          <button class="wish-heart${wished ? ' liked' : ''}" aria-label="${wishLabel}" onclick="event.stopPropagation();toggleWish('${safeId}')">${wished ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>'}</button>
+          <button class="whatsapp-btn" onclick="event.stopPropagation();openWhatsAppWithProduct(productsMap['${safeId}'])" aria-label="Order via WhatsApp"><i class="fab fa-whatsapp"></i></button>
+          <img src="${p.img || 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&auto=format&fit=crop'}" alt="${escapeHtml(nameDisplay)}" loading="lazy">
+        </div>
+        <div class="product-body">
+          <p class="product-cat">${escapeHtml(p.cat)} ${p.cat && p.catAr ? `<span class="arabic">- ${escapeHtml(p.catAr)}</span>` : ''}</p>
+          <h3 class="product-name">${escapeHtml(nameDisplay)}${nameDisplayAr && nameDisplayAr !== nameDisplay ? `<span class="arabic" style="display:block;font-size:0.85rem;color:#888;margin-top:4px">${escapeHtml(nameDisplayAr)}</span>` : ''}</h3>
       <div class="product-colors">${(p.colors || []).map(c => `<span class="color-dot" style="background:${c}"></span>`).join('')}</div>
       <div class="product-price">${origPrice ? `<span class="orig">${formatPrice(origPrice, selectedCurrency)}</span>` : ''}${formatPrice(price, selectedCurrency)}</div>
       <button class="add-to-cart-btn" onclick="addToCart('${safeId}','${safeName}','${p.img}',${price},'${safeCat}')"><i class="fas fa-shopping-bag"></i> Add to Bag</button>
@@ -1134,26 +1134,28 @@ const TEST_PRODUCTS = [
 ]
 
 async function loadProducts() {
-  let products = []
+  let firestoreProducts = []
   try {
-    const snap = await firestoreWithTimeout(db.collection('products').orderBy('createdAt', 'desc').get())
-    products = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+    const snap = await firestoreWithTimeout(db.collection('products').get(), 10000)
+    firestoreProducts = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+    firestoreProducts.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
   } catch { /* Firestore unavailable */ }
   let localProducts = []
   try { localProducts = JSON.parse(localStorage.getItem('rehab_products') || '[]') } catch { /* ignore */ }
-  const allProducts = localProducts.length ? [...localProducts, ...products] : products
+  let merged = {}
+  // localStorage products first (legacy/offline fallback)
+  localProducts.forEach(p => { merged[p.id] = p })
+  // Firestore products override/add
+  firestoreProducts.forEach(p => { merged[p.id] = p })
+  const allProducts = Object.values(merged)
   if (allProducts.length) {
-    productsMap = {}
-    allProducts.forEach(p => { productsMap[p.id] = p })
+    productsMap = merged
     renderProducts(allProducts)
     return allProducts
   }
-  // No products anywhere — show test products as demo
   productsMap = {}
   TEST_PRODUCTS.forEach(p => { productsMap[p.id] = p })
   renderProducts(TEST_PRODUCTS)
-  console.log('📦 Using test products (no data found)')
-  showToast('Store is in demo mode with sample products 🩷', 'info')
   return TEST_PRODUCTS
 }
 
@@ -1251,29 +1253,29 @@ function openWhatsAppWithProduct(product) {
   let message = `${STORE_NAME}
 
 `
-  message += `🛍️ المنتج: ${product.nameAr || product.name || 'N/A'}
+  message += `👤 New Order Request
+`
+  message += `${'─'.repeat(30)}
+`
+  message += `🛍️ ${product.nameAr || product.name || 'N/A'}
 `
   message += `🏷️ ${product.catAr || product.cat || 'N/A'}
 `
   const price = getProductPrice(product, selectedCurrency)
-  message += `💰 Price: ${formatPrice(price, selectedCurrency)}
+  message += `💰 ${formatPrice(price, selectedCurrency)}
 `
-  // Add description if exists
   if (product.descAr) {
-    message += `
-📝 ${product.descAr}
+    message += `📝 ${product.descAr}
 `
   }
-  // Add image URL
   if (product.img) {
     message += `
-📷 Image: ${product.img}
+${product.img}
 `
   }
-  // Add product link
   const productUrl = window.location.origin + window.location.pathname + '#shop'
   message += `
-🔗 View at: ${productUrl}
+🔗 ${productUrl}
 
 `
   message += `I would like to order this product.
@@ -1284,10 +1286,8 @@ function openWhatsAppWithProduct(product) {
 للطلب: أرغب في طلب هذا المنتج.
 `
   message += `يرجى التواصل معي لتأكيد التوافر ودفع الثمن.`
-  // Create WhatsApp URL
   const cleanNumber = WHATSAPP_NUMBER.replace(/\+/g, '')
   const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`
-  // Open in new tab
   window.open(whatsappUrl, '_blank')
   showToast('Opening WhatsApp...', 'info')
 }
@@ -1302,18 +1302,11 @@ function openWhatsAppWithCart() {
   message += `${'='.repeat(40)}
 
 `
-  // Customer info placeholder
   message += `👤 Customer: [Please provide your name]
 `
   message += `📱 Phone: [Please provide your phone]
 `
   message += `📍 Location: [Please provide your address]
-
-`
-  // Cart items
-  message += `🛒 CART ITEMS (${cart.length} total)
-`
-  message += `${'-'.repeat(40)}
 
 `
   const totalItems = cart.reduce((s, i) => s + i.qty, 0)
@@ -1329,10 +1322,14 @@ function openWhatsAppWithCart() {
 `
     message += `   🏷️ ${item.catAr || item.cat}
 `
+    if (item.img) {
+      message += `
+${item.img}
+`
+    }
     message += `
 `
   })
-  // Totals
   message += `${'='.repeat(40)}
 `
   message += `💵 Subtotal: ${formatPrice(subtotal, cart[0]?.currency || selectedCurrency)}
@@ -1342,7 +1339,6 @@ function openWhatsAppWithCart() {
   message += `💰 Total: ${formatPrice(subtotal, cart[0]?.currency || selectedCurrency)}
 
 `
-  // Call to action
   message += `I would like to place this order.
 `
   message += `Please contact me to confirm and arrange payment.
@@ -1351,10 +1347,8 @@ function openWhatsAppWithCart() {
   message += `للطلب: أرغب في إجراء هذا الطلب.
 `
   message += `يرجى التواصل معي لتأكيد الطلب وترتيب الدفع.`
-  // Create WhatsApp URL
   const cleanNumber = WHATSAPP_NUMBER.replace(/\+/g, '')
   const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`
-  // Open in new tab
   window.open(whatsappUrl, '_blank')
   showToast('Opening WhatsApp with cart details...', 'info')
 }
@@ -1590,9 +1584,11 @@ function wishToCart(id) {
   renderWishlistDrawer()
 }
 
+let heartsInterval = null
+
 function spawnHearts() {
   const container = document.getElementById('hearts')
-  setInterval(() => {
+  heartsInterval = setInterval(() => {
     const h = document.createElement('span')
     h.className = 'heart'
     h.innerHTML = ['♡','🩷','✿','♡','✦'][Math.floor(Math.random() * 5)]
@@ -1603,6 +1599,10 @@ function spawnHearts() {
     setTimeout(() => h.remove(), 14000)
   }, 800)
 }
+
+window.addEventListener('beforeunload', () => {
+  if (heartsInterval) clearInterval(heartsInterval)
+})
 
 // --- Cart state ---
 let cart = loadCart()
@@ -1849,8 +1849,9 @@ async function loadAdminProducts() {
   const wrap = document.getElementById('productsTableWrap')
   let products = []
   try {
-    const snap = await firestoreWithTimeout(db.collection('products').orderBy('createdAt', 'desc').get())
+    const snap = await firestoreWithTimeout(db.collection('products').get(), 10000)
     products = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+    products.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
   } catch { /* Firestore unavailable */ }
   // Also load local products from localStorage
   try {
@@ -1858,7 +1859,6 @@ async function loadAdminProducts() {
     products = [...localProducts, ...products]
   } catch { /* ignore */ }
   if (!products.length) {
-    // Fallback: show TEST_PRODUCTS in admin too
     products = TEST_PRODUCTS
   }
   let html = '<table class="admin-table"><thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Currency</th><th>Actions</th></tr></thead><tbody>'
@@ -2164,6 +2164,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Firebase failed — try local bypass as fallback
       if (checkLocalAdmin(email, pass)) {
         showToast('🔐 Local admin bypass (Firebase unavailable)', 'info')
+        try {
+          await auth.signInAnonymously()
+        } catch (_) { /* Anonymous auth failed — localStorage fallback still works */ }
         const mockUser = { email: email, uid: 'local-admin-' + Date.now() }
         document.getElementById('adminLoginForm').classList.remove('show')
         document.getElementById('adminDashboard').classList.add('show')
@@ -2207,6 +2210,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('adminEmail').value = ''
       document.getElementById('adminPass').value = ''
       document.getElementById('adminError').style.display = 'none'
+      try { auth.signOut() } catch { /* ignore */ }
     } else {
       auth.signOut()
     }
@@ -2215,13 +2219,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('adminLoginForm').classList.toggle('show', !user)
     document.getElementById('adminDashboard').classList.toggle('show', !!user)
     if (user) {
-      document.getElementById('adminEmailDisplay').textContent = user.email
+      document.getElementById('adminEmailDisplay').textContent = user.email || (user.isAnonymous ? LOCAL_ADMIN_EMAIL : 'Unknown')
       document.getElementById('adminEmail').value = ''
       document.getElementById('adminPass').value = ''
       document.getElementById('adminError').style.display = 'none'
-      loadAdminProducts()
-      loadAdminOrders()
-      loadAdminSubscribers()
+      if (!user.isAnonymous) {
+        loadAdminProducts()
+        loadAdminOrders()
+        loadAdminSubscribers()
+      }
     }
   })
   document.querySelectorAll('.admin-tab').forEach(tab => {
@@ -2276,30 +2282,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (!body.name || !body.cat || !body.price || !body.img) { showToast('Please fill required fields (name, category, price, and image URL)', 'err'); return }
     let saved = false
+    let savedId = null
     try {
-      const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 4000))
-      await Promise.race([
-        editingProductId ? db.collection('products').doc(editingProductId).update(body) : db.collection('products').add(body),
-        timeout
-      ])
-      saved = true
+      if (editingProductId && !editingProductId.startsWith('local-')) {
+        await firestoreWithTimeout(db.collection('products').doc(editingProductId).update(body), 10000)
+        savedId = editingProductId
+        saved = true
+      } else {
+        const ref = await firestoreWithTimeout(db.collection('products').add(body), 10000)
+        savedId = ref.id
+        saved = true
+        if (editingProductId && editingProductId.startsWith('local-')) {
+          const localProducts = JSON.parse(localStorage.getItem('rehab_products') || '[]')
+          localStorage.setItem('rehab_products', JSON.stringify(localProducts.filter(p => p.id !== editingProductId)))
+        }
+      }
       showToast(editingProductId ? 'Product updated! ✿' : 'Product added! 🩷', 'ok')
-    } catch { /* Firestore unavailable — fall through to local save */ }
+    } catch { /* Firestore unavailable */ }
     if (!saved) {
       const localProducts = JSON.parse(localStorage.getItem('rehab_products') || '[]')
       if (editingProductId) {
         const idx = localProducts.findIndex(p => p.id === editingProductId)
         if (idx >= 0) localProducts[idx] = { ...body, id: editingProductId }
+        savedId = editingProductId
       } else {
-        body.id = 'local-' + Date.now()
-        localProducts.push(body)
+        savedId = 'local-' + Date.now()
+        localProducts.push({ ...body, id: savedId })
       }
       localStorage.setItem('rehab_products', JSON.stringify(localProducts))
-      showToast(editingProductId ? 'Product updated locally! ✿' : 'Product added locally! 🩷', 'ok')
+      showToast(editingProductId ? 'Product saved offline ✿' : 'Product saved offline 🩷', 'ok')
+      productsMap[savedId] = { ...body, id: savedId }
+      if (!Object.values(productsMap).some(p => p.id.startsWith('test-'))) {
+        renderProducts(Object.values(productsMap))
+      } else {
+        loadProducts()
+      }
+    } else {
+      loadProducts()
     }
     cancelProductForm()
     loadAdminProducts()
-    loadProducts()
   })
   document.getElementById('nlForm')?.addEventListener('submit', async function(e) {
     e.preventDefault()

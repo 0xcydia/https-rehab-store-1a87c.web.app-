@@ -14,7 +14,7 @@
 // ============================================================================
 
 // Your WhatsApp number for receiving orders
-const WHATSAPP_NUMBER = '+201555121123';
+const WHATSAPP_NUMBER = '+201555121132';
 
 // Store information
 const STORE_NAME = 'Rehab Store';
