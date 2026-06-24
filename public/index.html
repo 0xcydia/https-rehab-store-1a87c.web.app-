@@ -8,6 +8,12 @@
 <meta name="keywords" content="rehab store, fashion, accessories, clothing, egypt, uae, arabic, ecommerce">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://rehab-store-1a87c.web.app">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#FF1493">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Rehab Store">
+<link rel="apple-touch-icon" href="/icon.svg">
 <!-- Open Graph -->
 <meta property="og:title" content="Rehab Store ✿ — Discover Beauty, Embrace Elegance">
 <meta property="og:description" content="Discover our curated collection of accessories, clothing, and lifestyle pieces designed to make every day feel like a fairytale.">
@@ -221,6 +227,13 @@ img{max-width:100%;display:block}
 .prod-modal-img{position:relative;overflow:hidden;border-radius:var(--radius) 0 0 var(--radius);min-height:400px;background:var(--mp)}
 .prod-modal-img img{width:100%;height:100%;object-fit:cover;display:block;transition:0.6s ease}
 .prod-modal-img:hover img{transform:scale(1.05)}
+.gallery-nav{position:absolute;bottom:16px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:5}
+.gallery-dot{width:10px;height:10px;border-radius:50%;border:2px solid white;background:rgba(255,255,255,0.3);cursor:pointer;transition:0.2s}
+.gallery-dot.active{background:var(--hpink);border-color:var(--hpink)}
+.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,0.6);background:rgba(0,0,0,0.2);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.9rem;transition:0.2s;backdrop-filter:blur(4px)}
+.gallery-arrow:hover{background:var(--hpink);border-color:var(--hpink)}
+.gallery-prev{left:12px}
+.gallery-next{right:12px}
 .prod-modal-badge{position:absolute;top:16px;left:16px;padding:8px 18px;color:white;font-size:0.75rem;font-weight:700;border-radius:999px;z-index:2;background:linear-gradient(135deg,var(--hpink),var(--purp));box-shadow:0 2px 8px rgba(255,20,147,0.3)}
 .prod-modal-badge.sale{background:linear-gradient(135deg,var(--gold),var(--hpink))}
 .prod-modal-info{padding:36px;display:flex;flex-direction:column}
@@ -348,6 +361,49 @@ img{max-width:100%;display:block}
 .admin-logged-in .logout-btn{padding:6px 16px;border-radius:999px;border:1px solid #ddd;background:white;cursor:pointer;font-family:'Quicksand',sans-serif;font-size:0.8rem;transition:0.2s}
 .admin-logged-in .logout-btn:hover{border-color:var(--hpink);color:var(--hpink)}
 .loading{text-align:center;padding:60px;color:#999;font-size:0.95rem}
+.skel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1200px;margin:0 auto;padding:0 20px}
+.skel-card{border-radius:16px;overflow:hidden;background:var(--mp);position:relative}
+.skel-card .skel-img{width:100%;padding-top:130%;background:linear-gradient(110deg,#f0f0f0 30%,#e8e8e8 50%,#f0f0f0 70%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+.skel-card .skel-body{padding:16px}
+.skel-card .skel-line{height:14px;border-radius:8px;background:linear-gradient(110deg,#f0f0f0 30%,#e8e8e8 50%,#f0f0f0 70%);background-size:200% 100%;animation:shimmer 1.5s infinite;margin-bottom:10px}
+.skel-card .skel-line:nth-child(1){width:40%}
+.skel-card .skel-line:nth-child(2){width:70%;height:18px}
+.skel-card .skel-line:nth-child(3){width:50%}
+.skel-card .skel-line:nth-child(4){width:30%;height:32px;border-radius:16px;margin-bottom:0}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+.status-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.status-Pending{background:#FFF3E0;color:#E65100}
+.status-Processing{background:#E3F2FD;color:#1565C0}
+.status-Shipped{background:#F3E5F5;color:#7B1FA2}
+.status-Delivered{background:#E8F5E9;color:#2E7D32}
+.status-Cancelled{background:#FFEBEE;color:#C62828}
+/* Dark mode status badges */
+[data-theme="dark"] .status-Pending{background:#3E2723;color:#FFB74D}
+[data-theme="dark"] .status-Processing{background:#1A237E;color:#64B5F6}
+[data-theme="dark"] .status-Shipped{background:#4A148C;color:#CE93D8}
+[data-theme="dark"] .status-Delivered{background:#1B5E20;color:#81C784}
+[data-theme="dark"] .status-Cancelled{background:#B71C1C;color:#EF9A9A}
+
+.order-detail-modal{position:fixed;top:0;left:0;right:0;bottom:0;z-index:10000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);padding:20px}
+.order-detail-modal.show{display:flex}
+.order-detail-content{background:var(--mp);border-radius:16px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;padding:32px;position:relative}
+.order-detail-content h3{margin:0 0 4px;font-family:var(--ff-serif);font-size:1.3rem}
+.order-detail-content .close-modal{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.order-detail-section{margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.order-detail-section label{display:block;font-size:0.8rem;color:#999;margin-bottom:4px}
+.order-detail-section select,.order-detail-section input{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-size:0.9rem;background:var(--bg);color:var(--text);margin-bottom:12px}
+.order-detail-section select:focus,.order-detail-section input:focus{outline:none;border-color:var(--hpink)}
+.order-item-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.9rem}
+.order-item-row:last-child{border-bottom:none}
+.order-item-name{flex:1}
+.order-item-qty{color:#999;margin:0 12px}
+.order-item-price{font-weight:600}
+.order-total-row{display:flex;justify-content:space-between;padding:12px 0 0;margin-top:8px;border-top:2px solid var(--border);font-size:1.05rem;font-weight:700}
+
+/* Dark mode skeleton */
+[data-theme="dark"] .skel-card{background:var(--mp)}
+[data-theme="dark"] .skel-card .skel-line,[data-theme="dark"] .skel-card .skel-img{background:linear-gradient(110deg,#2a2a2a 30%,#333 50%,#2a2a2a 70%);background-size:200% 100%}
 .empty{text-align:center;padding:40px;color:#ccc;font-size:0.9rem}
 .pagination{display:flex;justify-content:center;gap:8px;margin-top:16px}
 .pagination button{padding:6px 14px;border-radius:8px;border:1px solid #eee;background:white;cursor:pointer;font-size:0.8rem;transition:0.2s}
@@ -394,7 +450,7 @@ img{max-width:100%;display:block}
 .currency-selector{display:flex;align-items:center;gap:4px;padding:6px 12px;border:2px solid var(--mp);border-radius:999px;background:white;font-size:0.85rem;font-weight:600;color:var(--hpink);cursor:pointer}
 .currency-selector:hover{border-color:var(--hpink);box-shadow:0 2px 8px rgba(255,20,147,0.2)}
 .currency-selector select{padding:4px 8px;border:none;background:none;font-family:'Quicksand',sans-serif;font-size:0.85rem;font-weight:600;color:var(--hpink);cursor:pointer;outline:none}
-.currency-selector select option{color:var(--text)}
+.currency-selector select option{color:#2D2D2D}
 
 /* WhatsApp Button */
 .btn-whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);color:white;box-shadow:0 4px 16px rgba(37,211,102,0.3)}
@@ -456,6 +512,38 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
 .whatsapp-float-action i.fa-whatsapp{color:#25D366;font-size:1.2rem}
 .whatsapp-float-action i.fa-headset{color:#FF1493;font-size:1.2rem}
 .whatsapp-float-action i.fa-share-alt{color:#8B00FF;font-size:1.2rem}
+/* Account modal */
+.account-btn{background:none;border:none;color:var(--hpink);font-weight:600;font-size:0.85rem;cursor:pointer;padding:4px 8px;border-radius:8px;transition:0.2s;font-family:inherit}
+.account-btn:hover{background:rgba(255,20,147,0.08)}
+.account-modal{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);padding:20px}
+.account-modal.show{display:flex}
+.account-content{background:var(--mp);border-radius:16px;max-width:420px;width:100%;max-height:90vh;overflow-y:auto;padding:32px;position:relative}
+.account-content h3{margin:0 0 16px;font-family:var(--ff-serif);font-size:1.3rem;text-align:center}
+.account-content .close-modal{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.account-tabs{display:flex;gap:8px;margin-bottom:20px}
+.account-tab{flex:1;padding:10px;border:2px solid var(--border);border-radius:10px;background:none;cursor:pointer;font-weight:600;font-size:0.85rem;color:#999;transition:0.2s;font-family:inherit;text-align:center}
+.account-tab.active{border-color:var(--hpink);color:var(--hpink);background:rgba(255,20,147,0.06)}
+.account-form .form-group{margin-bottom:14px}
+.account-form .form-group label{display:block;font-size:0.8rem;color:#999;margin-bottom:4px}
+.account-form .form-group input{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-size:0.9rem;background:var(--bg);color:var(--text);box-sizing:border-box}
+.account-form .form-group input:focus{outline:none;border-color:var(--hpink)}
+.account-form .btn{width:100%;padding:12px;font-size:0.9rem}
+.account-form .switch-link{text-align:center;margin-top:12px;font-size:0.85rem;color:#999}
+.account-form .switch-link a{color:var(--hpink);cursor:pointer;font-weight:600}
+.account-dropdown{position:relative;display:inline-block}
+.account-dropdown-menu{position:absolute;top:100%;right:0;min-width:200px;background:var(--mp);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);padding:8px;display:none;z-index:100;margin-top:4px}
+.account-dropdown-menu.show{display:block}
+.account-dropdown-menu a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;color:var(--text);text-decoration:none;font-size:0.85rem;transition:0.2s;cursor:pointer}
+.account-dropdown-menu a:hover{background:rgba(255,20,147,0.06);color:var(--hpink)}
+.account-dropdown-menu .divider{height:1px;background:var(--border);margin:4px 0}
+.account-greeting{font-size:0.85rem;font-weight:600;color:var(--hpink);cursor:pointer;padding:4px 8px}
+/* Order history in account */
+.order-history-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.order-history-item:last-child{border-bottom:none}
+.order-history-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.order-history-id{font-size:0.75rem;color:#999}
+.order-history-total{font-weight:700;font-size:0.95rem}
+.order-history-detail{font-size:0.8rem;color:#666;margin:2px 0}
 @media (max-width:768px){
   .whatsapp-float{bottom:16px;right:16px}
   .whatsapp-float-btn{width:52px;height:52px;font-size:1.5rem}
@@ -479,6 +567,7 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
         <li><a href="#reviews">Reviews</a></li>
         <li><a href="#social">Follow</a></li>
         <li><a href="#footer">US</a></li>
+        <li id="accountNavItem"><a href="#" id="accountNavBtn" class="account-btn">Account</a></li>
         <li><a href="#" id="adminNavBtn" style="color:var(--hpink);font-size:0.8rem">Admin</a></li>
       </ul>
       <div class="nav-actions">
@@ -546,7 +635,10 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
         <h2 class="section-title">Our Collection</h2>
         <p class="section-desc">Curated for modern women across Egypt & UAE</p>
       </div>
-      <div class="products-grid" id="productsGrid"><div class="loading">Loading pretties... ♡</div></div>
+      <div style="text-align:center;margin-bottom:24px">
+        <input type="text" id="searchInput" placeholder="Search products... / ابحث عن منتج..." style="max-width:500px;width:100%;padding:12px 20px;border:2px solid #eee;border-radius:999px;font-family:'Quicksand',sans-serif;font-size:0.95rem;outline:none;transition:0.2s">
+      </div>
+      <div class="products-grid" id="productsGrid"><div class="skel-grid"><div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div></div></div><div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div></div></div><div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div></div></div><div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div></div></div><div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div></div></div><div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line"></div></div></div></div></div>
     </div>
   </section>
 
@@ -644,6 +736,90 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
 </footer>
 
 <!-- admin login modal -->
+<!-- Order detail modal -->
+<div class="order-detail-modal" id="orderDetailModal">
+  <div class="order-detail-content">
+    <button class="close-modal" onclick="closeOrderDetail()"><i class="fas fa-times"></i></button>
+    <h3 id="orderDetailTitle">Order</h3>
+    <p style="color:#999;font-size:0.85rem" id="orderDetailDate"></p>
+    <div class="order-detail-section">
+      <label>Items</label>
+      <div id="orderDetailItems"></div>
+      <div class="order-total-row">
+        <span>Total</span>
+        <span id="orderDetailTotal"></span>
+      </div>
+    </div>
+    <div class="order-detail-section">
+      <label>Customer</label>
+      <p id="orderDetailCustomer" style="font-size:0.95rem"></p>
+      <p id="orderDetailEmail" style="font-size:0.85rem;color:#999"></p>
+    </div>
+    <div class="order-detail-section" id="orderStatusSection">
+      <label>Status</label>
+      <select id="orderStatusSelect" onchange="updateOrderStatus(this.dataset.orderId, this.value)">
+        <option value="Pending">Pending</option>
+        <option value="Processing">Processing</option>
+        <option value="Shipped">Shipped</option>
+        <option value="Delivered">Delivered</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+      <label>Tracking Number</label>
+      <input type="text" id="orderTrackingInput" placeholder="e.g. SHIP123456" onchange="updateOrderTracking(this.dataset.orderId, this.value)">
+    </div>
+    <div class="order-detail-section">
+      <button class="btn btn-primary" onclick="openWhatsAppWithOrder(document.getElementById('orderStatusSelect').dataset.orderId)" style="width:100%"><i class="fab fa-whatsapp"></i> Contact Customer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Account modal -->
+<div class="account-modal" id="accountModal">
+  <div class="account-content">
+    <button class="close-modal" onclick="closeAccountModal()"><i class="fas fa-times"></i></button>
+    <h3>My Account ✿</h3>
+    <div class="account-tabs" id="accountTabs">
+      <button class="account-tab active" data-form="loginForm">Log In</button>
+      <button class="account-tab" data-form="registerForm">Register</button>
+    </div>
+    <div id="accountForms">
+      <div class="account-form" id="loginForm">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPass" placeholder="••••••••">
+        </div>
+        <button class="btn btn-primary" id="loginBtn">Log In</button>
+        <p class="switch-link">Don't have an account? <a onclick="switchAccountTab('registerForm')">Register</a></p>
+      </div>
+      <div class="account-form" id="registerForm" style="display:none">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="regName" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="regEmail" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="regPass" placeholder="At least 6 characters">
+        </div>
+        <button class="btn btn-primary" id="registerBtn">Create Account</button>
+        <p class="switch-link">Already have an account? <a onclick="switchAccountTab('loginForm')">Log In</a></p>
+      </div>
+    </div>
+    <div id="accountDashboard" style="display:none">
+      <p style="text-align:center;font-size:1.1rem;margin-bottom:16px">Welcome, <strong id="accountName"></strong> 🩷</p>
+      <h4 style="margin:0 0 12px;font-size:0.95rem">Order History</h4>
+      <div id="orderHistoryList"></div>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="adminModal">
   <div class="modal-bg" id="adminModalBg"></div>
   <div class="modal-body">
@@ -669,9 +845,7 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
           <p style="margin-top:8px"><strong>2. Create admin user</strong><br>
           Firebase Console → <strong>Authentication</strong> → <strong>Users</strong><br>
           → <strong>Add user</strong> with any email/password</p>
-          <p style="margin-top:8px"><strong>3. Or use local bypass</strong><br>
-          Login with <code>admin@local.test</code> / <code>admin123</code></p>
-          <a href="https://console.firebase.google.com/project/rehab-store-1a87c/authentication" target="_blank" style="display:inline-block;margin-top:8px;color:var(--hpink);font-weight:600">🔗 Open Firebase Console →</a>
+<a href="https://console.firebase.google.com/project/rehab-store-1a87c/authentication" target="_blank" style="display:inline-block;margin-top:8px;color:var(--hpink);font-weight:600">🔗 Open Firebase Console →</a>
         </div>
       </details>
     </div>
@@ -686,7 +860,10 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
         <button class="admin-tab" data-tab="subscribers">Subscribers</button>
       </div>
       <div id="adminProducts">
-        <button class="btn btn-primary" id="addProductBtn" style="margin-bottom:16px;font-size:0.85rem;padding:10px 20px">+ Add Product</button>
+        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+          <button class="btn btn-primary" id="addProductBtn" style="font-size:0.85rem;padding:10px 20px">+ Add Product</button>
+          <button class="btn btn-secondary" id="migrateLocalBtn" style="font-size:0.85rem;padding:10px 20px">📦 Migrate Local Products</button>
+        </div>
         <div id="productForm" style="display:none;margin-bottom:20px;padding:20px;background:#f9f9f9;border-radius:12px">
           <input type="hidden" id="pfId">
           <div class="form-group"><label>Product Name / اسم المنتج</label><input type="text" id="pfName" required placeholder="اسم المنتج"></div>
@@ -727,6 +904,7 @@ body.rtl .whatsapp-float-popup{right:auto;left:0;transform-origin:bottom left}
           <div class="form-group"><label>Original Price (optional)</label><input type="number" id="pfOrig" step="0.01"></div>
           <div class="form-group"><label>Badge (Sale / New / empty)</label><input type="text" id="pfBadge" placeholder="e.g. Sale"></div>
           <div class="form-group"><label>Image URL</label><input type="url" id="pfImg" required></div>
+          <div class="form-group"><label>Extra Images (comma-separated URLs)</label><input type="text" id="pfImages" placeholder="https://...,https://..."></div>
           <div class="form-group"><label>Colors (comma-separated hex)</label><input type="text" id="pfColors" placeholder="#FF1493,#FF69B4"></div>
           <div class="form-group"><label>Description</label><textarea id="pfDesc" rows="2"></textarea></div>
           <div class="form-group"><label>Description (Arabic)</label><textarea id="pfDescAr" rows="2" placeholder="الوصف بالعربية"></textarea></div>
@@ -1087,18 +1265,18 @@ function renderProductCard(p) {
   const price = getProductPrice(p, selectedCurrency)
   const origPrice = getProductOrigPrice(p, selectedCurrency)
   const safeId = p.id.replace(/]/g, '\\]').replace(/[']/g, "\\'")
-  const safeName = (p.name || p.nameAr || '').replace(/'/g, "\\'")
-  const safeCat = p.cat ? p.cat.replace(/'/g, "\\'") : ''
-  return `<div class="product-card" data-id="${p.id}" tabindex="0" role="button" aria-label="View ${escapeHtml(p.name || p.nameAr)}">
-    <div class="product-card-img">
-      ${p.badge ? `<span class="prod-badge${p.badge === 'Sale' ? ' sale' : ''}">${p.badge}</span>` : ''}
-      <button class="wish-heart${wished ? ' liked' : ''}" aria-label="${wishLabel}" onclick="event.stopPropagation();toggleWish('${safeId}')">${wished ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>'}</button>
-      <button class="whatsapp-btn" onclick="event.stopPropagation();openWhatsAppWithProduct(productsMap['${safeId}'])" aria-label="Order via WhatsApp"><i class="fab fa-whatsapp"></i></button>
-      <img src="${p.img || 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&auto=format&fit=crop'}" alt="${escapeHtml(p.name || p.nameAr)}" loading="lazy">
-    </div>
-    <div class="product-body">
-      <p class="product-cat">${escapeHtml(p.cat)} ${p.cat && p.catAr ? `<span class="arabic">- ${escapeHtml(p.catAr)}</span>` : ''}</p>
-      <h3 class="product-name arabic">${escapeHtml(p.name || p.nameAr)}</h3>
+const nameDisplay = p.nameEn || p.name || p.nameAr
+      const nameDisplayAr = p.nameAr
+      return `<div class="product-card" data-id="${p.id}" tabindex="0" role="button" aria-label="View ${escapeHtml(nameDisplay)}">
+        <div class="product-card-img">
+          ${p.badge ? `<span class="prod-badge${p.badge === 'Sale' ? ' sale' : ''}">${p.badge}</span>` : ''}
+          <button class="wish-heart${wished ? ' liked' : ''}" aria-label="${wishLabel}" onclick="event.stopPropagation();toggleWish('${safeId}')">${wished ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>'}</button>
+          <button class="whatsapp-btn" onclick="event.stopPropagation();openWhatsAppWithProduct(productsMap['${safeId}'])" aria-label="Order via WhatsApp"><i class="fab fa-whatsapp"></i></button>
+          <img src="${p.img || 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&auto=format&fit=crop'}" alt="${escapeHtml(nameDisplay)}" loading="lazy">
+        </div>
+        <div class="product-body">
+          <p class="product-cat">${escapeHtml(p.cat)} ${p.cat && p.catAr ? `<span class="arabic">- ${escapeHtml(p.catAr)}</span>` : ''}</p>
+          <h3 class="product-name">${escapeHtml(nameDisplay)}${nameDisplayAr && nameDisplayAr !== nameDisplay ? `<span class="arabic" style="display:block;font-size:0.85rem;color:#888;margin-top:4px">${escapeHtml(nameDisplayAr)}</span>` : ''}</h3>
       <div class="product-colors">${(p.colors || []).map(c => `<span class="color-dot" style="background:${c}"></span>`).join('')}</div>
       <div class="product-price">${origPrice ? `<span class="orig">${formatPrice(origPrice, selectedCurrency)}</span>` : ''}${formatPrice(price, selectedCurrency)}</div>
       <button class="add-to-cart-btn" onclick="addToCart('${safeId}','${safeName}','${p.img}',${price},'${safeCat}')"><i class="fas fa-shopping-bag"></i> Add to Bag</button>
@@ -1120,18 +1298,6 @@ function renderProducts(products) {
 
 let productsMap = {}
 
-// Fallback test products for when Firebase is not available
-const TEST_PRODUCTS = [
-  { id: 'test-1', name: 'حقيبة يد أنيقة', nameAr: 'حقيبة يد أنيقة', cat: 'Accessories', catAr: 'إكسسوارات', price: 89.99, orig: 119.99, img: 'https://images.unsplash.com/photo-1584917865788-ecd263787fb2?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', colors: ['#FF1493', '#8B00FF', '#FFD700'], badge: 'New', descAr: 'حقيبة يد مذهلة مصنوعة من مواد فاخرة، مثالية لأي مناسبة.', createdAt: Date.now() - 100000 },
-  { id: 'test-2', name: 'وشاح حريري', nameAr: 'وشاح حريري', cat: 'Fashion', catAr: 'موضة', price: 39.99, img: 'https://images.unsplash.com/photo-1584917865788-ecd263787fb2?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', colors: ['#FFD700', '#FF69B4', '#FFFFFF'], badge: 'Sale', descAr: 'وشاح حريري فاخر مع طباعة جميلة. يضيف الأناقة لأي زي.', createdAt: Date.now() - 50000 },
-  { id: 'test-3', name: 'قلادة ذهبية', nameAr: 'قلادة ذهبية', cat: 'Jewelry', catAr: 'مجوهرات', price: 149.99, orig: 199.99, img: 'https://images.unsplash.com/photo-1602173802759-3d9e0c1e9b8a?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', colors: ['#FFD700', '#C0C0C0'], badge: 'Sale', descAr: 'قلادة مطلية بالذهب بتصميم قلادة رقيق.', createdAt: Date.now() },
-  { id: 'test-4', name: 'طقم عود وعطور شرقية', nameAr: 'طقم عود وعطور شرقية', cat: 'Beauty', catAr: 'جمال', price: 59.99, orig: 79.99, img: 'https://images.unsplash.com/photo-1594735528801-b0d3e5a8b4a5?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', colors: ['#8B00FF', '#FFD700', '#800020'], badge: 'New', descAr: 'طقم عود وبخور فاخر مع ثلاثة عطور مميزة. يدوم طويلاً وفاخر.', price_EGP: 1800, createdAt: Date.now() - 20000 },
-  { id: 'test-5', name: 'عباية مطرزة', nameAr: 'عباية مطرزة', cat: 'Fashion', catAr: 'موضة', price: 129.99, img: 'https://images.unsplash.com/photo-1609505848912-b7c3f82c5e5c?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', colors: ['#2D2D2D', '#1a1a2e', '#800020'], badge: 'New', descAr: 'عباية أنيقة مطرزة بنقوش زهرية رقيقة. مثالية للمناسبات الخاصة.', createdAt: Date.now() - 15000 },
-  { id: 'test-6', name: 'صندل جلدي فاخر', nameAr: 'صندل جلدي فاخر', cat: 'Shoes', catAr: 'أحذية', price: 74.99, orig: 99.99, img: 'https://images.unsplash.com/photo-1543857077-6b304a7b3c2b?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', colors: ['#FF69B4', '#FFD700', '#C0C0C0'], badge: 'Sale', descAr: 'صندل جلدي مصنوع يدوياً بزخارف ذهبية. الراحة تلتقي بالفخامة.', price_EGP: 2250, createdAt: Date.now() - 10000 },
-  { id: 'test-7', name: 'ساعة وردية ذهبية', nameAr: 'ساعة وردية ذهبية', cat: 'Accessories', catAr: 'إكسسوارات', price: 199.99, orig: 299.99, img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', colors: ['#FF1493', '#FFD700', '#C0C0C0'], badge: 'Sale', descAr: 'ساعة أنيقة بلون الذهب الوردي مع قرص من عرق اللؤلؤ و كريستال سواروفسكي.', price_AED: 735, createdAt: Date.now() - 8000 },
-  { id: 'test-8', name: 'مجموعة شموع معطرة', nameAr: 'مجموعة شموع معطرة', cat: 'Home', catAr: 'منزل', price: 34.99, img: 'https://images.unsplash.com/photo-1602491053821-9bb7d2e6f8c5?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', colors: ['#FFD700', '#FF69B4', '#8B00FF', '#FF1493'], badge: 'New', descAr: 'طقم 4 شموع صويا مصبوبة يدوياً بروائح شرقية ساحرة.', price_EGP: 1050, createdAt: Date.now() - 5000 },
-  { id: 'test-9', name: 'مجموعة حجاب حريري', nameAr: 'مجموعة حجاب حريري', cat: 'Fashion', catAr: 'موضة', price: 49.99, img: 'https://images.unsplash.com/photo-1583394838336-acd977fe3e9f?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', colors: ['#FF69B4', '#8B00FF', '#FFD700', '#FF1493', '#1a1a2e'], descAr: 'طقم 5 حجابات حريرية فاخرة بألوان منسقة. خفيفة وقابلة للتنفس.', price_EGP: 1500, createdAt: Date.now() - 1000 }
-]
 
 async function loadProducts() {
   let firestoreProducts = []
@@ -1143,7 +1309,9 @@ async function loadProducts() {
   let localProducts = []
   try { localProducts = JSON.parse(localStorage.getItem('rehab_products') || '[]') } catch { /* ignore */ }
   let merged = {}
+  // localStorage products first (legacy/offline fallback)
   localProducts.forEach(p => { merged[p.id] = p })
+  // Firestore products override/add
   firestoreProducts.forEach(p => { merged[p.id] = p })
   const allProducts = Object.values(merged)
   if (allProducts.length) {
@@ -1151,10 +1319,29 @@ async function loadProducts() {
     renderProducts(allProducts)
     return allProducts
   }
-  productsMap = {}
-  TEST_PRODUCTS.forEach(p => { productsMap[p.id] = p })
-  renderProducts(TEST_PRODUCTS)
-  return TEST_PRODUCTS
+  renderProducts([])
+  return []
+}
+
+// --- Search ---
+let searchTerm = ''
+
+function filterProducts() {
+  const term = searchTerm.toLowerCase().trim()
+  const all = Object.values(productsMap)
+  if (!term) {
+    renderProducts(all)
+    return
+  }
+  const filtered = all.filter(p =>
+    (p.name && p.name.toLowerCase().includes(term)) ||
+    (p.nameAr && p.nameAr.toLowerCase().includes(term)) ||
+    (p.cat && p.cat.toLowerCase().includes(term)) ||
+    (p.catAr && p.catAr.toLowerCase().includes(term)) ||
+    (p.desc && p.desc.toLowerCase().includes(term)) ||
+    (p.descAr && p.descAr.toLowerCase().includes(term))
+  )
+  renderProducts(filtered)
 }
 
 // --- Product detail modal ---
@@ -1174,17 +1361,50 @@ function closeProductModal() {
   document.body.style.overflow = ''
 }
 
+let modalImageIndex = 0
+
 function renderProductDetail(p) {
   const safeDesc = p.descAr ? escapeHtml(p.descAr) : (p.desc ? escapeHtml(p.desc) : '')
   const price = getProductPrice(p, selectedCurrency)
   const origPrice = getProductOrigPrice(p, selectedCurrency)
   const imgContainer = document.getElementById('prodModalImg')
   const infoContainer = document.getElementById('prodModalInfo')
+  const allImages = [p.img, ...(p.images || [])].filter(Boolean)
+  modalImageIndex = 0
+  
+  const galleryDots = allImages.length > 1 ? `
+    <div class="gallery-nav">
+      ${allImages.map((_, i) => `<span class="gallery-dot${i === 0 ? ' active' : ''}" onclick="galleryGoTo(${i})"></span>`).join('')}
+    </div>
+  ` : ''
+  
+  const galleryArrows = allImages.length > 1 ? `
+    <button class="gallery-arrow gallery-prev" onclick="galleryPrev()"><i class="fas fa-chevron-left"></i></button>
+    <button class="gallery-arrow gallery-next" onclick="galleryNext()"><i class="fas fa-chevron-right"></i></button>
+  ` : ''
   
   imgContainer.innerHTML = `
     ${p.badge ? `<span class="prod-modal-badge${p.badge === 'Sale' ? ' sale' : ''}">${p.badge}</span>` : ''}
-    <img src="${p.img || 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&auto=format&fit=crop'}" alt="${escapeHtml(p.name)}" loading="lazy">
+    ${galleryArrows}
+    <img id="modalMainImg" src="${allImages[0]}" alt="${escapeHtml(p.name)}" loading="lazy">
+    ${galleryDots}
   `
+  
+  window.galleryGoTo = function(i) {
+    modalImageIndex = i
+    document.getElementById('modalMainImg').src = allImages[i]
+    document.querySelectorAll('.gallery-dot').forEach((d, j) => d.classList.toggle('active', j === i))
+  }
+  
+  window.galleryPrev = function() {
+    const i = (modalImageIndex - 1 + allImages.length) % allImages.length
+    window.galleryGoTo(i)
+  }
+  
+  window.galleryNext = function() {
+    const i = (modalImageIndex + 1) % allImages.length
+    window.galleryGoTo(i)
+  }
   
   const colorsHtml = p.colors && p.colors.length ? `
     <p class="prod-modal-label">Color</p>
@@ -1247,6 +1467,7 @@ function addFromModal(id) {
 // ============ WHATSAPP FUNCTIONS ============
 function openWhatsAppWithProduct(product) {
   if (!product) return
+  // Build message with product details
   let message = `${STORE_NAME}
 
 `
@@ -1581,9 +1802,11 @@ function wishToCart(id) {
   renderWishlistDrawer()
 }
 
+let heartsInterval = null
+
 function spawnHearts() {
   const container = document.getElementById('hearts')
-  setInterval(() => {
+  heartsInterval = setInterval(() => {
     const h = document.createElement('span')
     h.className = 'heart'
     h.innerHTML = ['♡','🩷','✿','♡','✦'][Math.floor(Math.random() * 5)]
@@ -1594,6 +1817,10 @@ function spawnHearts() {
     setTimeout(() => h.remove(), 14000)
   }, 800)
 }
+
+window.addEventListener('beforeunload', () => {
+  if (heartsInterval) clearInterval(heartsInterval)
+})
 
 // --- Cart state ---
 let cart = loadCart()
@@ -1774,6 +2001,7 @@ async function placeOrder() {
         email,
         phone,
         shipping: { name, address, city, country },
+        uid: currentCustomer?.uid || null,
         status: 'Pending',
         createdAt: Date.now()
       }))
@@ -1790,6 +2018,7 @@ async function placeOrder() {
         email,
         phone,
         shipping: { name, address, city, country },
+        uid: currentCustomer?.uid || null,
         status: 'Pending',
         createdAt: Date.now()
       })
@@ -1801,10 +2030,25 @@ async function placeOrder() {
     document.getElementById('checkoutForm').style.display = 'none'
     document.getElementById('checkoutConfirm').style.display = 'block'
     
+    const orderSummary = cart.map(i => `🛍️ ${i.nameAr || i.name} × ${i.qty} = ${formatPrice(i.price * i.qty, orderCurrency)}`).join('\n')
+    const notifyMsg = `${STORE_NAME} - New Order 🎉
+
+👤 ${name}
+📱 ${phone}
+📧 ${email}
+📍 ${address}, ${city}
+
+${orderSummary}
+
+💰 Total: ${formatPrice(getCartTotal(), orderCurrency)}
+📦 Shipping: Free (Egypt & UAE)`
+    const cleanNum = WHATSAPP_NUMBER.replace(/\+/g, '')
+    window.open(`https://wa.me/${cleanNum}?text=${encodeURIComponent(notifyMsg)}`, '_blank')
+    
     cart = []
     saveCart()
     
-    showToast('Order placed! Check your email for confirmation 🩷', 'ok')
+    showToast('Order placed! 🩷', 'ok')
   } catch (e) {
     showToast('Something went wrong. Please try again.', 'err')
     document.getElementById('chkPlaceBtn').disabled = false
@@ -1812,20 +2056,127 @@ async function placeOrder() {
   }
 }
 
+// --- Customer Accounts ---
+let currentCustomer = null
+
+function switchAccountTab(tabId) {
+  document.querySelectorAll('.account-tab').forEach(t => t.classList.remove('active'))
+  document.querySelector(`.account-tab[data-form="${tabId}"]`)?.classList.add('active')
+  document.querySelectorAll('#accountForms .account-form').forEach(f => f.style.display = 'none')
+  document.getElementById(tabId).style.display = 'block'
+}
+
+function openAccountModal() {
+  if (currentCustomer) {
+    showCustomerDashboard()
+  }
+  document.getElementById('accountModal').classList.add('show')
+}
+
+function closeAccountModal() {
+  document.getElementById('accountModal').classList.remove('show')
+}
+
+function showCustomerDashboard() {
+  document.getElementById('accountForms').style.display = 'none'
+  document.getElementById('accountDashboard').style.display = 'block'
+  document.getElementById('accountTabs').style.display = 'none'
+  document.getElementById('accountName').textContent = currentCustomer?.displayName || currentCustomer?.email || 'Customer'
+  loadCustomerOrders()
+}
+
+async function loadCustomerOrders() {
+  const list = document.getElementById('orderHistoryList')
+  if (!currentCustomer) { list.innerHTML = '<p style="color:#999;text-align:center">Please log in to see orders.</p>'; return }
+  try {
+    const snap = await firestoreWithTimeout(db.collection('orders').where('uid', '==', currentCustomer.uid).orderBy('createdAt', 'desc').get(), 10000)
+    const orders = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+    if (!orders.length) {
+      list.innerHTML = '<p style="color:#999;text-align:center">No orders yet. Start shopping! 🩷</p>'
+      return
+    }
+    list.innerHTML = orders.map(o => {
+      const itemSummary = (o.items || []).map(i => `${i.nameAr || i.name} ×${i.qty || 1}`).join(', ')
+      return `<div class="order-history-item">
+        <div class="order-history-header">
+          <span class="order-history-id">#${(o.id || '').slice(0, 8)}</span>
+          <span class="order-history-total">${formatPrice(o.total || 0, o.currency || 'USD')}</span>
+        </div>
+        <div class="order-history-detail">${escapeHtml(itemSummary)}</div>
+        <div class="order-history-detail"><span class="status-badge status-${o.status || 'Pending'}">${o.status || 'Pending'}</span> — ${new Date(o.createdAt).toLocaleDateString()}</div>
+      </div>`
+    }).join('')
+  } catch {
+    list.innerHTML = '<p style="color:#999;text-align:center">Could not load orders. Try again later.</p>'
+  }
+}
+
+function updateAccountNav() {
+  const navItem = document.getElementById('accountNavItem')
+  if (currentCustomer) {
+    navItem.innerHTML = `<div class="account-dropdown">
+      <span class="account-greeting" onclick="toggleAccountDropdown()">${currentCustomer.displayName || currentCustomer.email} ▾</span>
+      <div class="account-dropdown-menu" id="accountDropdown">
+        <a onclick="closeAccountDropdown();openAccountModal()">📦 My Orders</a>
+        <div class="divider"></div>
+        <a onclick="customerLogout()">🚪 Log Out</a>
+      </div>
+    </div>`
+  } else {
+    navItem.innerHTML = '<a href="#" id="accountNavBtn" class="account-btn" onclick="openAccountModal()">Account</a>'
+  }
+}
+
+function toggleAccountDropdown() {
+  document.getElementById('accountDropdown').classList.toggle('show')
+}
+
+function closeAccountDropdown() {
+  document.getElementById('accountDropdown')?.classList.remove('show')
+}
+
+async function customerRegister() {
+  const name = document.getElementById('regName').value.trim()
+  const email = document.getElementById('regEmail').value.trim()
+  const pass = document.getElementById('regPass').value
+  if (!name || !email || !pass) { showToast('Please fill all fields', 'err'); return }
+  if (pass.length < 6) { showToast('Password must be at least 6 characters', 'err'); return }
+  try {
+    const cred = await auth.createUserWithEmailAndPassword(email, pass)
+    await cred.user.updateProfile({ displayName: name })
+    currentCustomer = cred.user
+    showToast(`Welcome, ${name}! 🩷`, 'ok')
+    closeAccountModal()
+    updateAccountNav()
+  } catch (e) {
+    showToast(e.code === 'auth/email-already-in-use' ? 'Email already registered. Log in instead.' : 'Registration failed: ' + e.message, 'err')
+  }
+}
+
+async function customerLogin() {
+  const email = document.getElementById('loginEmail').value.trim()
+  const pass = document.getElementById('loginPass').value
+  if (!email || !pass) { showToast('Please fill all fields', 'err'); return }
+  try {
+    const cred = await auth.signInWithEmailAndPassword(email, pass)
+    currentCustomer = cred.user
+    showToast(`Welcome back! 🩷`, 'ok')
+    closeAccountModal()
+    updateAccountNav()
+  } catch (e) {
+    showToast(e.code === 'auth/user-not-found' ? 'No account found. Register instead.' : 'Login failed: ' + e.message, 'err')
+  }
+}
+
+function customerLogout() {
+  currentCustomer = null
+  updateAccountNav()
+  showToast('Logged out', 'info')
+}
+
 // --- Admin panel ---
 function showAdminModal() { document.getElementById('adminModal').classList.add('show') }
 function hideAdminModal() { document.getElementById('adminModal').classList.remove('show') }
-
-// ============ LOCAL ADMIN BYPASS (for development) ============
-// If Firebase auth fails, you can use this local bypass
-// To enable: Set LOCAL_ADMIN_BYPASS = true
-const LOCAL_ADMIN_BYPASS = true;
-const LOCAL_ADMIN_EMAIL = 'admin@local.test';
-const LOCAL_ADMIN_PASS = 'admin123';
-
-function checkLocalAdmin(email, password) {
-  return LOCAL_ADMIN_BYPASS && email === LOCAL_ADMIN_EMAIL && password === LOCAL_ADMIN_PASS;
-}
 
 function cancelProductForm() {
   editingProductId = null
@@ -1850,7 +2201,7 @@ async function loadAdminProducts() {
     products = [...localProducts, ...products]
   } catch { /* ignore */ }
   if (!products.length) {
-    products = TEST_PRODUCTS
+    // no products yet
   }
   let html = '<table class="admin-table"><thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Currency</th><th>Actions</th></tr></thead><tbody>'
   products.forEach(p => {
@@ -1889,21 +2240,25 @@ async function loadAdminOrders() {
   } catch { /* ignore */ }
   if (!orders.length) {
     wrap.innerHTML = '<p class="empty">No orders yet. ✿</p>'
+    window.__allOrders = []
     return
   }
+  window.__allOrders = orders
   let html = '<table class="admin-table"><thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead><tbody>'
   orders.forEach(o => {
     const itemCount = o.items?.length || 0
     const total = formatPrice(o.total || 0, o.currency || selectedCurrency)
     const date = new Date(o.createdAt).toLocaleDateString()
     const isLocal = o.id && o.id.startsWith('local-')
+    const status = o.status || 'Pending'
+    const statusClass = 'status-badge status-' + status
     html += `
       <tr>
         <td style="font-size:0.75rem">${isLocal ? '📦 ' : ''}${(o.id || '').slice(0, 8)}...</td>
         <td>${escapeHtml(o.shipping?.name || o.name || 'N/A')}<br><small style="color:#999">${o.email || ''}</small></td>
         <td>${itemCount}</td>
         <td>${total}</td>
-        <td><span style="font-size:0.75rem">${o.status || 'Pending'}</span><br><small>${date}</small></td>
+        <td><span class="${statusClass}">${status}</span><br><small>${date}</small></td>
         <td class="admin-actions">
           <button class="edit" onclick="viewOrder('${o.id}')" title="View"><i class="fas fa-eye"></i></button>
           ${isLocal ? '' : `<button class="btn-whatsapp-small" onclick="openWhatsAppWithOrder('${o.id}')" title="Contact via WhatsApp"><i class="fab fa-whatsapp"></i></button>`}
@@ -1964,6 +2319,7 @@ function editProduct(id) {
   document.getElementById('pfOrig').value = p.orig || ''
   document.getElementById('pfBadge').value = p.badge || ''
   document.getElementById('pfImg').value = p.img || ''
+  document.getElementById('pfImages').value = (p.images || []).join(', ')
   document.getElementById('pfColors').value = (p.colors || []).join(', ')
   document.getElementById('pfDesc').value = p.desc || ''
   document.getElementById('pfDescAr').value = p.descAr || ''
@@ -2020,7 +2376,55 @@ async function deleteSubscriber(id) {
 }
 
 function viewOrder(id) {
-  alert('View order functionality would be implemented here. Order ID: ' + id)
+  const order = window.__allOrders?.find(o => o.id === id)
+  if (!order) { showToast('Order not found', 'err'); return }
+  document.getElementById('orderDetailTitle').textContent = `Order #${id.slice(0, 8)}`
+  document.getElementById('orderDetailDate').textContent = new Date(order.createdAt).toLocaleString()
+  
+  const itemsHtml = (order.items || []).map(i => `
+    <div class="order-item-row">
+      <span class="order-item-name">${escapeHtml(i.nameAr || i.name)}</span>
+      <span class="order-item-qty">×${i.qty || 1}</span>
+      <span class="order-item-price">${formatPrice(i.price * (i.qty || 1), order.currency || selectedCurrency)}</span>
+    </div>
+  `).join('')
+  document.getElementById('orderDetailItems').innerHTML = itemsHtml
+  document.getElementById('orderDetailTotal').textContent = formatPrice(order.total || 0, order.currency || selectedCurrency)
+  document.getElementById('orderDetailCustomer').textContent = order.shipping?.name || order.name || 'N/A'
+  document.getElementById('orderDetailEmail').textContent = order.email || ''
+  
+  const sel = document.getElementById('orderStatusSelect')
+  sel.value = order.status || 'Pending'
+  sel.dataset.orderId = id
+  const tracking = document.getElementById('orderTrackingInput')
+  tracking.value = order.tracking || ''
+  tracking.dataset.orderId = id
+  
+  document.getElementById('orderDetailModal').classList.add('show')
+}
+
+function closeOrderDetail() {
+  document.getElementById('orderDetailModal').classList.remove('show')
+}
+
+async function updateOrderStatus(id, status) {
+  try {
+    await firestoreWithTimeout(db.collection('orders').doc(id).update({ status: status }), 10000)
+    showToast(`Status updated to ${status}`, 'ok')
+    loadAdminOrders()
+  } catch (e) {
+    showToast('Failed to update status', 'err')
+  }
+}
+
+async function updateOrderTracking(id, tracking) {
+  if (!tracking.trim()) return
+  try {
+    await firestoreWithTimeout(db.collection('orders').doc(id).update({ tracking: tracking.trim() }), 10000)
+    showToast('Tracking number saved', 'ok')
+  } catch (e) {
+    showToast('Failed to save tracking', 'err')
+  }
 }
 
 // ============ FLOATING WHATSAPP BUTTON ============
@@ -2058,6 +2462,10 @@ document.addEventListener('click', function(e) {
   const popup = document.getElementById('whatsappPopup')
   if (float && popup && !float.contains(e.target) && popup.classList.contains('show')) {
     popup.classList.remove('show')
+  }
+  const odModal = document.getElementById('orderDetailModal')
+  if (odModal && odModal.classList.contains('show') && e.target === odModal) {
+    odModal.classList.remove('show')
   }
 })
 
@@ -2119,6 +2527,9 @@ function seedDemoOrder() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {})
+  }
   loadProducts()
   spawnHearts()
   updateCartBadge()
@@ -2134,9 +2545,41 @@ document.addEventListener('DOMContentLoaded', () => {
   if (currencySelect) {
     currencySelect.addEventListener('change', updateCurrency)
   }
+  // Search listener
+  const searchInput = document.getElementById('searchInput')
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      searchTerm = this.value
+      filterProducts()
+    })
+  }
   // Language toggle listener
   document.getElementById('langToggle')?.addEventListener('click', toggleLanguage)
 
+  // Customer account listeners
+  document.getElementById('registerBtn')?.addEventListener('click', customerRegister)
+  document.getElementById('loginBtn')?.addEventListener('click', customerLogin)
+  document.querySelectorAll('.account-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchAccountTab(tab.dataset.form))
+  })
+  document.getElementById('accountModal')?.addEventListener('click', e => {
+    if (e.target === document.getElementById('accountModal')) closeAccountModal()
+  })
+  // Close account dropdown on outside click
+  document.addEventListener('click', e => {
+    const dd = document.getElementById('accountDropdown')
+    if (dd && !e.target.closest('.account-dropdown') && dd.classList.contains('show')) {
+      dd.classList.remove('show')
+    }
+  })
+  // Check for existing customer auth on load
+  auth.onAuthStateChanged(user => {
+    if (user && !user.isAnonymous) {
+      currentCustomer = user
+      updateAccountNav()
+    }
+  })
+  
   // Admin event listeners
   document.getElementById('adminNavBtn')?.addEventListener('click', e => { e.preventDefault(); showAdminModal() })
   document.getElementById('adminModalBg')?.addEventListener('click', hideAdminModal)
@@ -2147,60 +2590,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const errEl = document.getElementById('adminError')
     errEl.style.display = 'none'
     
-    // First try Firebase authentication for all users
     try {
       await auth.signInWithEmailAndPassword(email, pass)
-      // Firebase login successful — onAuthStateChanged handles UI
     } catch (e) {
-      // Firebase failed — try local bypass as fallback
-      if (checkLocalAdmin(email, pass)) {
-        showToast('🔐 Local admin bypass (Firebase unavailable)', 'info')
-        const mockUser = { email: email, uid: 'local-admin-' + Date.now() }
-        document.getElementById('adminLoginForm').classList.remove('show')
-        document.getElementById('adminDashboard').classList.add('show')
-        document.getElementById('adminEmailDisplay').textContent = email
-        document.getElementById('adminEmail').value = ''
-        document.getElementById('adminPass').value = ''
-        document.getElementById('adminError').style.display = 'none'
-        loadAdminProducts()
-        loadAdminOrders()
-        loadAdminSubscribers()
-      } else {
-        // Enhanced error messages for Firebase authentication
-        let errorMsg = e.message || 'Login failed';
-        if (e.code === 'auth/user-not-found') {
-          errorMsg = '❌ User not found. Please check the email or create the user in Firebase Console.';
-        } else if (e.code === 'auth/wrong-password') {
-          errorMsg = '❌ Wrong password. Please check your password or reset it in Firebase Console.';
-        } else if (e.code === 'auth/user-disabled') {
-          errorMsg = '❌ User account disabled. Please enable the user in Firebase Console → Authentication → Users.';
-        } else if (e.code === 'auth/invalid-credential' || e.code === 'auth/operation-not-allowed') {
-          errorMsg = '❌ Email/Password authentication not enabled. Please enable in Firebase Console → Authentication → Sign-in method.';
-        } else if (e.code === 'auth/invalid-email') {
-          errorMsg = '❌ Invalid email format. Please enter a valid email address.';
-        } else if (e.code === 'auth/app-not-authorized' || e.code === 'auth/network-request-failed') {
-          errorMsg = '❌ Firebase project not configured correctly. Please check API key and project settings.';
-        } else if (e.code === 'auth/project-not-found') {
-          errorMsg = '❌ Firebase project "rehab-store-1a87c" not found. Please create the project in Firebase Console first.';
-        }
-        errEl.textContent = errorMsg;
-        console.error('Firebase auth error:', e.code, e.message, e);
-        errEl.style.display = 'block';
-        showToast('Login failed: ' + errorMsg, 'err');
+      let errorMsg = e.message || 'Login failed';
+      if (e.code === 'auth/user-not-found') {
+        errorMsg = '❌ User not found. Check the email or create the user in Firebase Console.';
+      } else if (e.code === 'auth/wrong-password') {
+        errorMsg = '❌ Wrong password.';
+      } else if (e.code === 'auth/user-disabled') {
+        errorMsg = '❌ User account disabled.';
+      } else if (e.code === 'auth/invalid-credential' || e.code === 'auth/operation-not-allowed') {
+        errorMsg = '❌ Email/Password auth not enabled. Enable it in Firebase Console → Authentication → Sign-in method.';
+      } else if (e.code === 'auth/invalid-email') {
+        errorMsg = '❌ Invalid email format.';
+      } else if (e.code === 'auth/network-request-failed') {
+        errorMsg = '❌ Network error. Check your connection.';
       }
+      errEl.textContent = errorMsg;
+      errEl.style.display = 'block';
+      showToast('Login failed: ' + errorMsg, 'err');
     }
   })
   document.getElementById('adminLogoutBtn')?.addEventListener('click', () => {
-    if (LOCAL_ADMIN_BYPASS) {
-      // Local logout
-      document.getElementById('adminLoginForm').classList.add('show')
-      document.getElementById('adminDashboard').classList.remove('show')
-      document.getElementById('adminEmail').value = ''
-      document.getElementById('adminPass').value = ''
-      document.getElementById('adminError').style.display = 'none'
-    } else {
-      auth.signOut()
-    }
+    auth.signOut()
   })
   auth.onAuthStateChanged(async user => {
     document.getElementById('adminLoginForm').classList.toggle('show', !user)
@@ -2210,9 +2623,11 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('adminEmail').value = ''
       document.getElementById('adminPass').value = ''
       document.getElementById('adminError').style.display = 'none'
-      loadAdminProducts()
-      loadAdminOrders()
-      loadAdminSubscribers()
+      if (!user.isAnonymous) {
+        loadAdminProducts()
+        loadAdminOrders()
+        loadAdminSubscribers()
+      }
     }
   })
   document.querySelectorAll('.admin-tab').forEach(tab => {
@@ -2238,6 +2653,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('pfBadge').value = ''
     document.getElementById('pfImg').value = ''
     document.getElementById('pfColors').value = ''
+    document.getElementById('pfImages').value = ''
     document.getElementById('pfDesc').value = ''
     document.getElementById('pfDescAr').value = ''
     document.getElementById('productForm').style.display = 'block'
@@ -2260,6 +2676,7 @@ document.addEventListener('DOMContentLoaded', () => {
       badge: document.getElementById('pfBadge').value.trim() || null,
       img: document.getElementById('pfImg').value.trim(),
       colors: document.getElementById('pfColors').value.split(',').map(c => c.trim()).filter(Boolean),
+      images: document.getElementById('pfImages').value.split(',').map(u => u.trim()).filter(Boolean),
       desc: document.getElementById('pfDesc').value.trim(),
       descAr: document.getElementById('pfDescAr').value.trim(),
       currency: currency,
@@ -2319,6 +2736,29 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch { showToast('Something went wrong. Try again!', 'err') }
   })
 
+  // Migrate local products to Firestore
+  document.getElementById('migrateLocalBtn')?.addEventListener('click', async function() {
+    const localProducts = JSON.parse(localStorage.getItem('rehab_products') || '[]')
+    const localOnly = localProducts.filter(p => p.id && p.id.startsWith('local-'))
+    if (!localOnly.length) { showToast('No local products to migrate!', 'ok'); return }
+    this.disabled = true
+    this.textContent = `Migrating ${localOnly.length} products...`
+    let migrated = 0
+    for (const p of localOnly) {
+      try {
+        const { id, ...data } = p
+        data.createdAt = Date.now()
+        await firestoreWithTimeout(db.collection('products').add(data), 10000)
+        migrated++
+      } catch (e) { console.error('Migration error', p.id, e) }
+    }
+    const remaining = localProducts.filter(p => !p.id.startsWith('local-'))
+    localStorage.setItem('rehab_products', JSON.stringify(remaining))
+    this.disabled = false
+    this.textContent = '📦 Migrate Local Products'
+    showToast(`Migrated ${migrated}/${localOnly.length} products to Firestore!`, 'ok')
+    loadAdminProducts()
+  })
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) {
     e.preventDefault()
