@@ -1,8 +1,10 @@
-const CACHE = 'rehab-store-v1'
+const CACHE = 'rehab-store-v2'
 const ASSETS = [
   '/',
   '/manifest.json',
-  '/icon.svg'
+  '/icon.svg',
+  '/styles.css',
+  '/app.js'
 ]
 
 self.addEventListener('install', e => {
